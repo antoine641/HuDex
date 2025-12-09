@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arlequin AI - Next-Gen Social Data Intelligence Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* ===== 基础重置与变量 ===== */
+        :root {
+            --primary: #00d4ff;
+            --primary-dark: #00a8cc;
+            --secondary: #8a2be2;
+            --dark-bg: #0a0a0f;
+            --dark-surface: #12121a;
+            --darker-surface: #0c0c14;
+            --glass-bg: rgba(25, 25, 35, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: rgba(0, 0, 0, 0.2);
+            --text-primary: #f0f0f0;
+            --text-secondary: #b0b0c0;
+            --accent-glow: rgba(0, 212, 255, 0.15);
+            --gradient: linear-gradient(135deg, #00d4ff, #8a2be2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.05) 0%, transparent 20%);
+        }
+
+        /* ===== 3D玻璃态背景元素 ===== */
+        .glass-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .glass-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent-glow);
+            filter: blur(60px);
+            opacity: 0.4;
+        }
+
+        .circle-1 {
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            right: -100px;
+            background: rgba(0, 212, 255, 0.15);
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            left: -100px;
+            background: rgba(138, 43, 226, 0.15);
+        }
+
+        .circle-3 {
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 30%;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        /* ===== 玻璃态卡片 ===== */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 
+                0 15px 35px var(--glass-shadow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(0, 212, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        /* ===== 导航栏 ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+        }
+
+        /* ===== Hero 区域 ===== */
+        .hero {
+            padding: 12rem 5% 8rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* ===== 特性部分 ===== */
+        .section {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ===== 数据部分 ===== */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* ===== 团队部分 ===== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .team-bio {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== 联系表单 ===== */
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        textarea.form-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* ===== 页脚 ===== */
+        footer {
+            background: var(--darker-surface);
+            padding: 4rem 5% 2rem;
+            margin-top: 6rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-links a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .copyright {
+            text-align: center;
+            color: var(--text-secondary);
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+
+        /* ===== 响应式设计 ===== */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section {
+                padding: 4rem 5%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 10rem 5% 6rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .glass-card, .feature-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* ===== 动画效果 ===== */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 212, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D玻璃态背景 -->
+    <div class="glass-bg">
+        <div class="glass-circle circle-1"></div>
+        <div class="glass-circle circle-2"></div>
+        <div class="glass-circle circle-3 floating"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-brain logo-icon"></i>
+                Arlequin AI
+            </a>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#platform" class="nav-link">Platform</a>
+                <a href="#team" class="nav-link">Team</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <a href="#contact" class="cta-button pulse">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <section class="hero">
+        <div class="glass-card" style="max-width: 1000px; margin: 0 auto;">
+            <h1>Transform Chaotic Data into Strategic Intelligence</h1>
+            <p class="hero-subtitle">
+                Arlequin AI is a next-generation AI-native platform for social data analytics, 
+                transforming massive, unstructured, multilingual datasets into actionable insights 
+                with speed, precision, and full traceability.
+            </p>
+            <div class="hero-buttons">
+                <a href="#contact" class="cta-button">Request Demo</a>
+                <a href="#platform" class="secondary-button">Explore Platform</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特性部分 -->
+    <section id="features" class="section">
+        <h2 class="section-title">Why Arlequin AI?</h2>
+        <p class="section-subtitle">
+            We don't build another LLM chatbot. We develop comprehension models for strategic intelligence.
+        </p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Lightning Speed Analysis</h3>
+                <p class="feature-desc">
+                    Process up to 10 million content items in seconds, not days. 
+                    Real-time ingestion from social media, news, podcasts, and internal documents.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3 class="feature-title">Fully Transparent</h3>
+                <p class="feature-desc">
+                    Every insight is traceable back to its source. No black box, no hallucination. 
+                    Complete visibility into data provenance.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Sovereign & Compliant</h3>
+                <p class="feature-desc">
+                    GDPR-compliant European solution, deployable on-premise. 
+                    Complete control over your data environment with enterprise-grade security.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 平台部分 -->
+    <section id="platform" class="section" style="background: rgba(10, 10, 15, 0.5); border-radius: 30px;">
+        <div class="glass-card">
+            <h2 class="section-title">HuDex Platform</h2>
+            <p class="section-subtitle">
+                Your informational radar for strategic decision-making
+            </p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: center;">
+                <div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Three-Step Intelligence</h3>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                            <div style="background: var(--gradient); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">1</div>
+                            <div>
+                                <h4 style="font-size: 1.2rem; margin-bottom: 0.3rem;">Collect Data</h4>
+                                <p style="color: var(--text-secondary);">Directly collect data from all social media, press, podcasts, blogs and plug your own data sources.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                            <div style="background: var(--gradient); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">2</div>
+                            <div>
+                                <h4 style="font-size: 1.2rem; margin-bottom: 0.3rem;">Analyze It</h4>
+                                <p style="color: var(--text-secondary);">Data is processed through cutting-edge AI models. Super easy to use with powerful visualizations.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center;">
+                            <div style="background: var(--gradient); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">3</div>
+                            <div>
+                                <h4 style="font-size: 1.2rem; margin-bottom: 0.3rem;">Act on Insights</h4>
+                                <p style="color: var(--text-secondary);">Move directly to concrete operations using forecasting, simulation and prediction tools.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 2rem; border-radius: 20px; border: 1px solid rgba(0, 212, 255, 0.2);">
+                        <div style="font-size: 5rem; color: var(--primary); margin-bottom: 1rem;">
+                            <i class="fas fa-radar"></i>
+                        </div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Google Cloud Powered</h3>
+                        <p style="color: var(--text-secondary);">
+                            Built on Google Cloud's AI/ML stack with Vertex AI, BigQuery, and Natural Language API for scalable, sovereign intelligence.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Enterprise Clients</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10M+</div>
+                    <div class="stat-label">Content Items Analyzed Daily</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95.92%</div>
+                    <div class="stat-label">Accuracy Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队部分 -->
+    <section id="team" class="section">
+        <h2 class="section-title">Our Leading Team</h2>
+        <p class="section-subtitle">
+            Bringing together researchers, engineers and strategists from France's leading institutions
+        </p>
+        
+        <div class="team-grid">
+            <div class="glass-card team-card">
+                <div class="team-avatar">H</div>
+                <h3 class="team-name">Hugo</h3>
+                <div class="team-role">Political Scientist & AI Director</div>
+                <p class="team-bio">
+                    PhD from ENS Ulm, former professor at Princeton and Sciences Po Paris. 
+                    Director of the Artificial Intelligence, Democracy and Information Environment programme.
+                </p>
+            </div>
+            
+            <div class="glass-card team-card">
+                <div class="team-avatar">A</div>
+                <h3 class="team-name">Antoine</h3>
+                <div class="team-role">AI Research Engineer</div>
+                <p class="team-bio">
+                    CNRS research engineer for 10 years with a PhD in statistics and machine learning. 
+                    Contributed to France's national AI strategy and World Bank initiatives.
+                </p>
+            </div>
+            
+            <div class="glass-card team-card">
+                <div class="team-avatar">G</div>
+                <h3 class="team-name">Guillaume</h3>
+                <div class="team-role">Former French National AI Coordinator</div>
+                <p class="team-bio">
+                    PhD in Robotics and Neuroscience. Under his coordination, France rose from 13th to 5th place in the Global AI Index.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系部分 -->
+    <section id="contact" class="section">
+        <div class="glass-card contact-form">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">
+                Ready to transform your data into strategic intelligence? Contact us for a demo.
+            </p>
+            
+            <form id="contactForm">
+                <div class="form-group">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" class="form-input" placeholder="Enter your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="antoine@arlequinai.xyz" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Company</label>
+                    <input type="text" class="form-input" placeholder="Your organization">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-input" placeholder="Tell us about your data challenges..."></textarea>
+                </div>
+                
+                <button type="submit" class="cta-button" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
+                    Send Message <i class="fas fa-paper-plane" style="margin-left: 10px;"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">
+                    <i class="fas fa-brain" style="color: var(--primary); margin-right: 10px;"></i>
+                    Arlequin AI
+                </div>
+                <p class="footer-desc">
+                    Next-generation AI-native platform for data analysis: transform massive, raw, 
+                    unstructured and multilingual datasets into actions, instantly.
+                </p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Platform</h4>
+                <a href="#features">Features</a>
+                <a href="#platform">HuDex Platform</a>
+                <a href="#contact">Request Demo</a>
+                <a href="#contact">Pricing</a>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Company</h4>
+                <a href="#team">Our Team</a>
+                <a href="#contact">Careers</a>
+                <a href="#contact">Blog</a>
+                <a href="#contact">Press</a>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <a href="mailto:antoine@arlequinai.xyz">
+                    <i class="fas fa-envelope" style="margin-right: 8px;"></i>
+                    antoine@arlequinai.xyz
+                </a>
+                <a href="https://arlequinai.xyz" target="_blank">
+                    <i class="fas fa-globe" style="margin-right: 8px;"></i>
+                    arlequinai.xyz
+                </a>
+                <div style="margin-top: 1.5rem;">
+                    <a href="#" style="display: inline-block; margin-right: 1rem; font-size: 1.2rem;">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" style="display: inline-block; margin-right: 1rem; font-size: 1.2rem;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" style="display: inline-block; font-size: 1.2rem;">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2023 Arlequin AI. All rights reserved. | GDPR Compliant | Sovereign European Solution
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 表单提交处理
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const formData = {
+                name: this.querySelector('input[type="text"]').value,
+                email: this.querySelector('input[type="email"]').value,
+                company: this.querySelectorAll('input[type="text"]')[1].value,
+                message: this.querySelector('textarea').value
+            };
+            
+            // 这里可以添加实际的表单提交逻辑
+            // 例如：发送到服务器或显示成功消息
+            
+            // 显示成功消息
+            alert(`Thank you, ${formData.name}! Your message has been sent. We'll contact you at ${formData.email} shortly.`);
+            
+            // 重置表单
+            this.reset();
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 10, 15, 0.95)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 15, 0.85)';
+                navbar.style.backdropFilter = 'blur(15px)';
+            }
+        });
+
+        // 玻璃态卡片悬停效果增强
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateY = (x - centerX) / 25;
+                const rotateX = (centerY - y) / 25;
+                
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察需要动画的元素
+        document.querySelectorAll('.feature-card, .team-card, .stat-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        console.log('Arlequin AI Website loaded successfully!');
+        console.log('Contact: antoine@arlequinai.xyz | Website: arlequinai.xyz');
+    </script>
+</body>
+</html>
