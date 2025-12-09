@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arlequin AI - Next-Gen Social Data Intelligence Platform</title>
+    <title>Arlequin AI - Google Cloud Native Intelligence Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* ===== 基础重置与变量 ===== */
+        /* ===== Google Cloud 主题配色 ===== */
         :root {
-            --primary: #00d4ff;
-            --primary-dark: #00a8cc;
-            --secondary: #8a2be2;
-            --dark-bg: #0a0a0f;
-            --dark-surface: #12121a;
-            --darker-surface: #0c0c14;
-            --glass-bg: rgba(25, 25, 35, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-shadow: rgba(0, 0, 0, 0.2);
-            --text-primary: #f0f0f0;
-            --text-secondary: #b0b0c0;
-            --accent-glow: rgba(0, 212, 255, 0.15);
-            --gradient: linear-gradient(135deg, #00d4ff, #8a2be2);
+            --gcp-blue: #4285F4;
+            --gcp-green: #34A853;
+            --gcp-yellow: #FBBC05;
+            --gcp-red: #EA4335;
+            --gcp-gradient: linear-gradient(135deg, #4285F4, #34A853, #FBBC05);
+            --dark-bg: #0f1419;
+            --dark-surface: #1a2029;
+            --darker-surface: #0c1117;
+            --glass-bg: rgba(26, 32, 41, 0.75);
+            --glass-border: rgba(66, 133, 244, 0.15);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --accent-glow: rgba(66, 133, 244, 0.15);
         }
 
         * {
@@ -41,12 +42,12 @@
             line-height: 1.6;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.05) 0%, transparent 20%);
+                radial-gradient(circle at 20% 30%, rgba(66, 133, 244, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(52, 168, 83, 0.05) 0%, transparent 30%);
         }
 
-        /* ===== 3D玻璃态背景元素 ===== */
-        .glass-bg {
+        /* ===== Google Cloud 3D背景 ===== */
+        .gcp-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -56,58 +57,71 @@
             overflow: hidden;
         }
 
-        .glass-circle {
+        .gcp-shape {
             position: absolute;
-            border-radius: 50%;
-            background: var(--accent-glow);
-            filter: blur(60px);
+            filter: blur(40px);
             opacity: 0.4;
         }
 
-        .circle-1 {
-            width: 500px;
-            height: 500px;
+        .shape-1 {
+            width: 600px;
+            height: 600px;
             top: -200px;
             right: -100px;
-            background: rgba(0, 212, 255, 0.15);
+            background: rgba(66, 133, 244, 0.1);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
         }
 
-        .circle-2 {
-            width: 400px;
-            height: 400px;
+        .shape-2 {
+            width: 500px;
+            height: 500px;
             bottom: -150px;
             left: -100px;
-            background: rgba(138, 43, 226, 0.15);
+            background: rgba(52, 168, 83, 0.1);
+            border-radius: 63% 37% 37% 63% / 63% 63% 37% 37%;
         }
 
-        .circle-3 {
-            width: 300px;
-            height: 300px;
-            top: 50%;
-            left: 30%;
-            background: rgba(0, 212, 255, 0.1);
+        .shape-3 {
+            width: 400px;
+            height: 400px;
+            top: 40%;
+            left: 60%;
+            background: rgba(251, 188, 5, 0.08);
+            border-radius: 50%;
         }
 
-        /* ===== 玻璃态卡片 ===== */
-        .glass-card {
+        /* ===== Google Cloud 玻璃态卡片 ===== */
+        .gcp-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 2rem;
             box-shadow: 
-                0 15px 35px var(--glass-shadow),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 20px 40px var(--glass-shadow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .glass-card:hover {
+        .gcp-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gcp-gradient);
+        }
+
+        .gcp-card:hover {
             transform: translateY(-8px);
+            border-color: rgba(66, 133, 244, 0.3);
             box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(0, 212, 255, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(66, 133, 244, 0.2);
         }
 
         /* ===== 导航栏 ===== */
@@ -117,10 +131,10 @@
             width: 100%;
             z-index: 1000;
             padding: 1.5rem 5%;
-            background: rgba(10, 10, 15, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 20, 25, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(66, 133, 244, 0.1);
         }
 
         .nav-container {
@@ -142,8 +156,25 @@
         }
 
         .logo-icon {
-            color: var(--primary);
+            color: var(--gcp-blue);
             font-size: 2rem;
+        }
+
+        .gcp-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(66, 133, 244, 0.1);
+            border: 1px solid rgba(66, 133, 244, 0.3);
+            border-radius: 50px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: 1rem;
+        }
+
+        .gcp-badge i {
+            color: var(--gcp-blue);
         }
 
         .nav-links {
@@ -172,7 +203,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--gradient);
+            background: var(--gcp-gradient);
             transition: width 0.3s ease;
         }
 
@@ -181,78 +212,77 @@
         }
 
         .cta-button {
-            background: var(--gradient);
+            background: var(--gcp-gradient);
             color: white;
             border: none;
-            padding: 0.8rem 1.8rem;
+            padding: 0.9rem 2rem;
             border-radius: 50px;
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(66, 133, 244, 0.25);
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 12px 30px rgba(66, 133, 244, 0.35);
         }
 
         /* ===== Hero 区域 ===== */
         .hero {
-            padding: 12rem 5% 8rem;
+            padding: 14rem 5% 8rem;
             max-width: 1400px;
             margin: 0 auto;
             text-align: center;
         }
 
         .hero h1 {
-            font-size: 3.8rem;
+            font-size: 4rem;
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #fff 30%, var(--primary) 100%);
+            background: linear-gradient(to right, #fff 30%, var(--gcp-blue) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
         .hero-subtitle {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: var(--text-secondary);
-            max-width: 800px;
-            margin: 0 auto 3rem;
+            max-width: 900px;
+            margin: 0 auto 2rem;
         }
 
-        .hero-buttons {
+        .gcp-tech-stack {
             display: flex;
-            gap: 1.5rem;
             justify-content: center;
-            margin-top: 3rem;
+            gap: 2rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
         }
 
-        .secondary-button {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .secondary-button:hover {
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.8rem 1.2rem;
             background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
+            border-radius: 12px;
+            font-weight: 500;
         }
 
-        /* ===== 特性部分 ===== */
+        .tech-item i {
+            color: var(--gcp-blue);
+            font-size: 1.2rem;
+        }
+
+        /* ===== 技术架构部分 ===== */
         .section {
             padding: 6rem 5%;
             max-width: 1400px;
@@ -260,7 +290,7 @@
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
             margin-bottom: 1rem;
             text-align: center;
@@ -269,128 +299,187 @@
         .section-subtitle {
             color: var(--text-secondary);
             text-align: center;
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto 4rem;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
-        .features-grid {
+        /* ===== GCP 架构图 ===== */
+        .architecture {
+            margin: 4rem 0;
+        }
+
+        .arch-layer {
+            margin-bottom: 3rem;
+        }
+
+        .layer-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--gcp-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .layer-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(66, 133, 244, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            background: rgba(66, 133, 244, 0.05);
+            border-color: rgba(66, 133, 244, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(66, 133, 244, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: var(--gcp-blue);
+        }
+
+        .service-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ===== 集成方案 ===== */
+        .integration-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        .feature-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
+        .integration-card {
+            text-align: center;
+            padding: 2.5rem 2rem;
+        }
+
+        .integration-icon {
+            width: 80px;
+            height: 80px;
             border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.4s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(0, 212, 255, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 18px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1));
+            background: var(--gcp-gradient);
+            margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            color: var(--primary);
+            font-size: 2rem;
+            color: white;
         }
 
-        .feature-title {
+        .integration-title {
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 1rem;
         }
 
-        .feature-desc {
+        .integration-desc {
             color: var(--text-secondary);
             font-size: 0.95rem;
+            margin-bottom: 1.5rem;
         }
 
-        /* ===== 数据部分 ===== */
-        .stats-container {
+        /* ===== 优势对比 ===== */
+        .comparison {
+            background: rgba(26, 32, 41, 0.5);
+            border-radius: 24px;
+            padding: 3rem;
+            margin: 4rem 0;
+        }
+
+        .comparison-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 2rem;
-            margin-top: 4rem;
         }
 
-        .stat-card {
-            text-align: center;
-            padding: 2rem;
+        .comparison-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            line-height: 1;
-            margin-bottom: 0.5rem;
+        .comparison-col h3 i {
+            color: var(--gcp-green);
         }
 
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 1rem;
+        .comparison-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 1.5rem;
         }
 
-        /* ===== 团队部分 ===== */
-        .team-grid {
+        .comparison-item i {
+            color: var(--gcp-green);
+            margin-top: 3px;
+        }
+
+        .comparison-item.warning i {
+            color: #ea4335;
+        }
+
+        /* ===== 部署选项 ===== */
+        .deployment-options {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        .team-card {
+        .deployment-card {
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
         }
 
-        .team-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-            font-weight: 700;
-        }
-
-        .team-name {
-            font-size: 1.3rem;
+        .deployment-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .team-role {
-            color: var(--primary);
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .team-bio {
-            color: var(--text-secondary);
             font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gcp-badge {
+            background: rgba(66, 133, 244, 0.15);
+            color: var(--gcp-blue);
+            border: 1px solid rgba(66, 133, 244, 0.3);
+        }
+
+        .hybrid-badge {
+            background: rgba(52, 168, 83, 0.15);
+            color: var(--gcp-green);
+            border: 1px solid rgba(52, 168, 83, 0.3);
         }
 
         /* ===== 联系表单 ===== */
@@ -425,7 +514,7 @@
 
         .form-input:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--gcp-blue);
             background: rgba(255, 255, 255, 0.08);
         }
 
@@ -479,8 +568,20 @@
         }
 
         .footer-links a:hover {
-            color: var(--primary);
+            color: var(--gcp-blue);
             transform: translateX(5px);
+        }
+
+        .gcp-partner-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.8rem 1.5rem;
+            background: rgba(66, 133, 244, 0.1);
+            border: 2px solid rgba(66, 133, 244, 0.3);
+            border-radius: 12px;
+            font-weight: 600;
+            margin-top: 1rem;
         }
 
         .copyright {
@@ -504,6 +605,10 @@
             .section {
                 padding: 4rem 5%;
             }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -515,27 +620,17 @@
                 font-size: 1.1rem;
             }
             
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
+            .gcp-tech-stack {
+                gap: 1rem;
+            }
+            
+            .tech-item {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
             }
             
             .section-title {
                 font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero {
-                padding: 10rem 5% 6rem;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .glass-card, .feature-card {
-                padding: 1.5rem;
             }
         }
 
@@ -553,236 +648,468 @@
             animation: float 6s ease-in-out infinite;
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
         @keyframes pulse {
             0% {
-                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4);
+                box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4);
             }
             70% {
-                box-shadow: 0 0 0 10px rgba(0, 212, 255, 0);
+                box-shadow: 0 0 0 15px rgba(66, 133, 244, 0);
             }
             100% {
-                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0);
+                box-shadow: 0 0 0 0 rgba(66, 133, 244, 0);
             }
+        }
+
+        .pulse {
+            animation: pulse 3s infinite;
         }
     </style>
 </head>
 <body>
-    <!-- 3D玻璃态背景 -->
-    <div class="glass-bg">
-        <div class="glass-circle circle-1"></div>
-        <div class="glass-circle circle-2"></div>
-        <div class="glass-circle circle-3 floating"></div>
+    <!-- Google Cloud 3D背景 -->
+    <div class="gcp-bg">
+        <div class="gcp-shape shape-1 floating"></div>
+        <div class="gcp-shape shape-2"></div>
+        <div class="gcp-shape shape-3 floating" style="animation-delay: -3s;"></div>
     </div>
 
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="logo">
-                <i class="fas fa-brain logo-icon"></i>
+                <i class="fas fa-cloud logo-icon"></i>
                 Arlequin AI
+                <span class="gcp-badge">
+                    <i class="fab fa-google"></i>
+                    Google Cloud Built
+                </span>
             </a>
             <div class="nav-links">
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#platform" class="nav-link">Platform</a>
-                <a href="#team" class="nav-link">Team</a>
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#integration" class="nav-link">Integration</a>
+                <a href="#deployment" class="nav-link">Deployment</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <a href="#contact" class="cta-button pulse">Get Started</a>
+            <a href="#contact" class="cta-button pulse">
+                <i class="fab fa-google"></i>
+                Start on GCP
+            </a>
         </div>
     </nav>
 
     <!-- Hero 区域 -->
     <section class="hero">
-        <div class="glass-card" style="max-width: 1000px; margin: 0 auto;">
-            <h1>Transform Chaotic Data into Strategic Intelligence</h1>
+        <div class="gcp-card" style="max-width: 1000px; margin: 0 auto;">
+            <h1>Google Cloud Native Intelligence Platform</h1>
             <p class="hero-subtitle">
-                Arlequin AI is a next-generation AI-native platform for social data analytics, 
-                transforming massive, unstructured, multilingual datasets into actionable insights 
-                with speed, precision, and full traceability.
+                HuDex by Arlequin AI is a fully integrated Google Cloud solution for multilingual social data intelligence. 
+                Built on GCP's AI/ML stack to deliver enterprise-grade analytics at planetary scale.
             </p>
-            <div class="hero-buttons">
-                <a href="#contact" class="cta-button">Request Demo</a>
-                <a href="#platform" class="secondary-button">Explore Platform</a>
+            
+            <div class="gcp-tech-stack">
+                <div class="tech-item">
+                    <i class="fas fa-robot"></i>
+                    Vertex AI
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-database"></i>
+                    BigQuery
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-language"></i>
+                    Natural Language AI
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    Cloud Storage
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-network-wired"></i>
+                    Pub/Sub
+                </div>
+            </div>
+            
+            <div class="hero-buttons" style="display: flex; gap: 1.5rem; justify-content: center; margin-top: 3rem;">
+                <a href="#contact" class="cta-button">
+                    <i class="fas fa-play-circle"></i>
+                    Launch on GCP
+                </a>
+                <a href="#architecture" class="cta-button" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+                    <i class="fas fa-sitemap"></i>
+                    View Architecture
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- 特性部分 -->
-    <section id="features" class="section">
-        <h2 class="section-title">Why Arlequin AI?</h2>
+    <!-- GCP 技术架构 -->
+    <section id="architecture" class="section">
+        <h2 class="section-title">Google Cloud Native Architecture</h2>
         <p class="section-subtitle">
-            We don't build another LLM chatbot. We develop comprehension models for strategic intelligence.
+            Built from the ground up on Google Cloud Platform for maximum scalability, security, and AI capabilities
         </p>
         
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
-                <h3 class="feature-title">Lightning Speed Analysis</h3>
-                <p class="feature-desc">
-                    Process up to 10 million content items in seconds, not days. 
-                    Real-time ingestion from social media, news, podcasts, and internal documents.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-eye"></i>
-                </div>
-                <h3 class="feature-title">Fully Transparent</h3>
-                <p class="feature-desc">
-                    Every insight is traceable back to its source. No black box, no hallucination. 
-                    Complete visibility into data provenance.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3 class="feature-title">Sovereign & Compliant</h3>
-                <p class="feature-desc">
-                    GDPR-compliant European solution, deployable on-premise. 
-                    Complete control over your data environment with enterprise-grade security.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 平台部分 -->
-    <section id="platform" class="section" style="background: rgba(10, 10, 15, 0.5); border-radius: 30px;">
-        <div class="glass-card">
-            <h2 class="section-title">HuDex Platform</h2>
-            <p class="section-subtitle">
-                Your informational radar for strategic decision-making
-            </p>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: center;">
-                <div>
-                    <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Three-Step Intelligence</h3>
-                    
-                    <div style="margin-bottom: 2rem;">
-                        <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                            <div style="background: var(--gradient); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">1</div>
-                            <div>
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.3rem;">Collect Data</h4>
-                                <p style="color: var(--text-secondary);">Directly collect data from all social media, press, podcasts, blogs and plug your own data sources.</p>
-                            </div>
+        <div class="architecture">
+            <!-- 数据层 -->
+            <div class="arch-layer">
+                <h3 class="layer-title">
+                    <i class="fas fa-layer-group"></i>
+                    Data Ingestion Layer
+                </h3>
+                <div class="layer-services">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
                         </div>
-                        
-                        <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                            <div style="background: var(--gradient); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">2</div>
-                            <div>
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.3rem;">Analyze It</h4>
-                                <p style="color: var(--text-secondary);">Data is processed through cutting-edge AI models. Super easy to use with powerful visualizations.</p>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: center;">
-                            <div style="background: var(--gradient); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">3</div>
-                            <div>
-                                <h4 style="font-size: 1.2rem; margin-bottom: 0.3rem;">Act on Insights</h4>
-                                <p style="color: var(--text-secondary);">Move directly to concrete operations using forecasting, simulation and prediction tools.</p>
-                            </div>
-                        </div>
+                        <h4 class="service-name">Cloud Storage</h4>
+                        <p class="service-desc">
+                            Multi-regional storage for unstructured social data, documents, and media files with automatic lifecycle management
+                        </p>
                     </div>
-                </div>
-                
-                <div style="text-align: center;">
-                    <div style="background: rgba(0, 0, 0, 0.3); padding: 2rem; border-radius: 20px; border: 1px solid rgba(0, 212, 255, 0.2);">
-                        <div style="font-size: 5rem; color: var(--primary); margin-bottom: 1rem;">
-                            <i class="fas fa-radar"></i>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-stream"></i>
                         </div>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Google Cloud Powered</h3>
-                        <p style="color: var(--text-secondary);">
-                            Built on Google Cloud's AI/ML stack with Vertex AI, BigQuery, and Natural Language API for scalable, sovereign intelligence.
+                        <h4 class="service-name">Pub/Sub</h4>
+                        <p class="service-desc">
+                            Real-time messaging for data streams from social APIs, news feeds, and internal sources with global scalability
+                        </p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h4 class="service-name">Cloud CDN</h4>
+                        <p class="service-desc">
+                            Global content delivery network for low-latency access to processed insights and visualizations
                         </p>
                     </div>
                 </div>
             </div>
             
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Enterprise Clients</div>
+            <!-- AI/ML层 -->
+            <div class="arch-layer">
+                <h3 class="layer-title">
+                    <i class="fas fa-brain"></i>
+                    AI/ML Processing Layer
+                </h3>
+                <div class="layer-services">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h4 class="service-name">Vertex AI</h4>
+                        <p class="service-desc">
+                            Custom-trained NLP models for sentiment analysis, entity recognition, and trend detection across 50+ languages
+                        </p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h4 class="service-name">Translation AI</h4>
+                        <p class="service-desc">
+                            Real-time multilingual translation and localization for global social media monitoring
+                        </p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="service-name">AutoML Tables</h4>
+                        <p class="service-desc">
+                            Automated predictive modeling for risk assessment, trend forecasting, and anomaly detection
+                        </p>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">10M+</div>
-                    <div class="stat-label">Content Items Analyzed Daily</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">95.92%</div>
-                    <div class="stat-label">Accuracy Rate</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">2</div>
-                    <div class="stat-label">Years of Excellence</div>
+            </div>
+            
+            <!-- 数据与分析层 -->
+            <div class="arch-layer">
+                <h3 class="layer-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Data & Analytics Layer
+                </h3>
+                <div class="layer-services">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h4 class="service-name">BigQuery</h4>
+                        <p class="service-desc">
+                            Petabyte-scale data warehouse for structured insights with real-time querying and ML integration
+                        </p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4 class="service-name">Dataflow</h4>
+                        <p class="service-desc">
+                            Serverless batch and stream processing for ETL pipelines and real-time analytics
+                        </p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="service-name">Cloud Data Loss Prevention</h4>
+                        <p class="service-desc">
+                            Automated sensitive data detection and redaction for compliance with GDPR and global regulations
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 团队部分 -->
-    <section id="team" class="section">
-        <h2 class="section-title">Our Leading Team</h2>
+    <!-- 集成方案 -->
+    <section id="integration" class="section" style="background: rgba(15, 20, 25, 0.5); border-radius: 30px;">
+        <div class="gcp-card">
+            <h2 class="section-title">GCP Integration Solutions</h2>
+            <p class="section-subtitle">
+                Seamless integration with your existing Google Cloud environment
+            </p>
+            
+            <div class="integration-grid">
+                <div class="gcp-card integration-card">
+                    <div class="integration-icon">
+                        <i class="fab fa-google-drive"></i>
+                    </div>
+                    <h3 class="integration-title">Google Workspace</h3>
+                    <p class="integration-desc">
+                        Direct integration with Google Drive, Sheets, and Docs for seamless data import/export and collaborative analysis
+                    </p>
+                    <div class="tech-item" style="justify-content: center;">
+                        <i class="fab fa-google-drive"></i>
+                        Drive API
+                    </div>
+                </div>
+                
+                <div class="gcp-card integration-card">
+                    <div class="integration-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3 class="integration-title">Identity & Security</h3>
+                    <p class="integration-desc">
+                        Integrated with Cloud IAM, Identity Platform, and Security Command Center for enterprise-grade access control
+                    </p>
+                    <div class="tech-item" style="justify-content: center;">
+                        <i class="fas fa-shield-alt"></i>
+                        Cloud IAM
+                    </div>
+                </div>
+                
+                <div class="gcp-card integration-card">
+                    <div class="integration-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3 class="integration-title">Monitoring & Ops</h3>
+                    <p class="integration-desc">
+                        Comprehensive monitoring with Cloud Monitoring, Logging, and Trace for operational excellence
+                    </p>
+                    <div class="tech-item" style="justify-content: center;">
+                        <i class="fas fa-chart-line"></i>
+                        Cloud Ops
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 优势对比 -->
+            <div class="comparison">
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">Why Google Cloud vs. Alternatives</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-col">
+                        <h3><i class="fas fa-check-circle"></i> With Google Cloud</h3>
+                        <div class="comparison-item">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Native AI/ML Integration</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.3rem;">
+                                    Direct access to Vertex AI, AutoML, and pre-trained models
+                                </p>
+                            </div>
+                        </div>
+                        <div class="comparison-item">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Global Low-Latency Network</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.3rem;">
+                                    Google's private fiber network across 35+ regions
+                                </p>
+                            </div>
+                        </div>
+                        <div class="comparison-item">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Built-in Compliance</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.3rem;">
+                                    GDPR, CCPA, ISO 27001 certified out-of-the-box
+                                </p>
+                            </div>
+                        </div>
+                        <div class="comparison-item">
+                            <i class="fas fa-check"></i>
+                            <div>
+                                <strong>Cost Optimization</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.3rem;">
+                                    Sustained use discounts and committed use contracts
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-col">
+                        <h3><i class="fas fa-times-circle"></i> Traditional Solutions</h3>
+                        <div class="comparison-item warning">
+                            <i class="fas fa-times"></i>
+                            <div>
+                                <strong>AI Integration Overhead</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.3rem;">
+                                    Complex integration with third-party AI services
+                                </p>
+                            </div>
+                        </div>
+                        <div class="comparison-item warning">
+                            <i class="fas fa-times"></i>
+                            <div>
+                                <strong>Network Limitations</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.3rem;">
+                                    Dependent on public internet for global delivery
+                                </p>
+                            </div>
+                        </div>
+                        <div class="comparison-item warning">
+                            <i class="fas fa-times"></i>
+                            <div>
+                                <strong>Compliance Complexity</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.3rem;">
+                                    Manual compliance configuration and auditing
+                                </p>
+                            </div>
+                        </div>
+                        <div class="comparison-item warning">
+                            <i class="fas fa-times"></i>
+                            <div>
+                                <strong>Hidden Costs</strong>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.3rem;">
+                                    Egress fees, API call charges, and scaling limitations
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 部署选项 -->
+    <section id="deployment" class="section">
+        <h2 class="section-title">Google Cloud Deployment Options</h2>
         <p class="section-subtitle">
-            Bringing together researchers, engineers and strategists from France's leading institutions
+            Flexible deployment models to meet your security, compliance, and performance requirements
         </p>
         
-        <div class="team-grid">
-            <div class="glass-card team-card">
-                <div class="team-avatar">H</div>
-                <h3 class="team-name">Hugo</h3>
-                <div class="team-role">Political Scientist & AI Director</div>
-                <p class="team-bio">
-                    PhD from ENS Ulm, former professor at Princeton and Sciences Po Paris. 
-                    Director of the Artificial Intelligence, Democracy and Information Environment programme.
+        <div class="deployment-options">
+            <div class="gcp-card deployment-card">
+                <span class="deployment-badge gcp-badge">Fully Managed on GCP</span>
+                <div class="integration-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3 class="integration-title">SaaS on Google Cloud</h3>
+                <p class="integration-desc">
+                    Fully managed service running on Google Cloud with automatic updates, scaling, and maintenance.
                 </p>
+                <ul style="text-align: left; color: var(--text-secondary); margin: 1.5rem 0; padding-left: 1.5rem;">
+                    <li style="margin-bottom: 0.8rem;">Automatic global scaling</li>
+                    <li style="margin-bottom: 0.8rem;">Google-managed security patches</li>
+                    <li style="margin-bottom: 0.8rem;">99.9% uptime SLA</li>
+                    <li>Pay-as-you-go pricing</li>
+                </ul>
+                <a href="#contact" class="cta-button" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-play"></i>
+                    Start Free Trial
+                </a>
             </div>
             
-            <div class="glass-card team-card">
-                <div class="team-avatar">A</div>
-                <h3 class="team-name">Antoine</h3>
-                <div class="team-role">AI Research Engineer</div>
-                <p class="team-bio">
-                    CNRS research engineer for 10 years with a PhD in statistics and machine learning. 
-                    Contributed to France's national AI strategy and World Bank initiatives.
+            <div class="gcp-card deployment-card">
+                <span class="deployment-badge hybrid-badge">Hybrid Deployment</span>
+                <div class="integration-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h3 class="integration-title">GCP + On-Premises</h3>
+                <p class="integration-desc">
+                    Hybrid model with sensitive data on-premises and AI processing on Google Cloud via Anthos.
                 </p>
+                <ul style="text-align: left; color: var(--text-secondary); margin: 1.5rem 0; padding-left: 1.5rem;">
+                    <li style="margin-bottom: 0.8rem;">Data sovereignty compliance</li>
+                    <li style="margin-bottom: 0.8rem;">Anthos for hybrid management</li>
+                    <li style="margin-bottom: 0.8rem;">Zero-trust security model</li>
+                    <li>Bring-your-own-encryption keys</li>
+                </ul>
+                <a href="#contact" class="cta-button" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.1);">
+                    <i class="fas fa-cogs"></i>
+                    Request Architecture
+                </a>
             </div>
             
-            <div class="glass-card team-card">
-                <div class="team-avatar">G</div>
-                <h3 class="team-name">Guillaume</h3>
-                <div class="team-role">Former French National AI Coordinator</div>
-                <p class="team-bio">
-                    PhD in Robotics and Neuroscience. Under his coordination, France rose from 13th to 5th place in the Global AI Index.
+            <div class="gcp-card deployment-card">
+                <span class="deployment-badge gcp-badge">Private GCP Instance</span>
+                <div class="integration-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="integration-title">Dedicated GCP Project</h3>
+                <p class="integration-desc">
+                    Isolated Google Cloud project with dedicated resources and custom VPC configuration.
                 </p>
+                <ul style="text-align: left; color: var(--text-secondary); margin: 1.5rem 0; padding-left: 1.5rem;">
+                    <li style="margin-bottom: 0.8rem;">Single-tenant isolation</li>
+                    <li style="margin-bottom: 0.8rem;">Custom VPC and firewall rules</li>
+                    <li style="margin-bottom: 0.8rem;">Enterprise support SLA</li>
+                    <li>Custom compliance certifications</li>
+                </ul>
+                <a href="#contact" class="cta-button" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-building"></i>
+                    Enterprise Quote
+                </a>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 4rem;">
+            <div class="tech-item" style="display: inline-flex; margin: 0 1rem;">
+                <i class="fas fa-euro-sign"></i>
+                GDPR Compliant
+            </div>
+            <div class="tech-item" style="display: inline-flex; margin: 0 1rem;">
+                <i class="fas fa-shield-alt"></i>
+                ISO 27001
+            </div>
+            <div class="tech-item" style="display: inline-flex; margin: 0 1rem;">
+                <i class="fas fa-cloud"></i>
+                Cloud Native
             </div>
         </div>
     </section>
 
     <!-- 联系部分 -->
     <section id="contact" class="section">
-        <div class="glass-card contact-form">
-            <h2 class="section-title">Get In Touch</h2>
+        <div class="gcp-card contact-form">
+            <h2 class="section-title">Start Your Google Cloud Journey</h2>
             <p class="section-subtitle">
-                Ready to transform your data into strategic intelligence? Contact us for a demo.
+                Get a personalized demo and architecture review for your Google Cloud environment
             </p>
             
             <form id="contactForm">
-                <div class="form-group">
-                    <label class="form-label">Your Name</label>
-                    <input type="text" class="form-input" placeholder="Enter your name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-input" placeholder="antoine@arlequinai.xyz" required>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">Your Name *</label>
+                        <input type="text" class="form-input" placeholder="Enter your name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" class="form-input" placeholder="antoine@arlequinai.xyz" required>
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -791,12 +1118,46 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Message</label>
-                    <textarea class="form-input" placeholder="Tell us about your data challenges..."></textarea>
+                    <label class="form-label">Current Google Cloud Usage</label>
+                    <select class="form-input">
+                        <option value="">Select your GCP experience</option>
+                        <option value="new">New to Google Cloud</option>
+                        <option value="existing">Existing GCP customer</option>
+                        <option value="enterprise">Enterprise GCP user</option>
+                        <option value="partner">GCP Partner</option>
+                    </select>
                 </div>
                 
-                <button type="submit" class="cta-button" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
-                    Send Message <i class="fas fa-paper-plane" style="margin-left: 10px;"></i>
+                <div class="form-group">
+                    <label class="form-label">Deployment Interest</label>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" style="accent-color: var(--gcp-blue);">
+                            SaaS on GCP
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" style="accent-color: var(--gcp-blue);">
+                            Hybrid Deployment
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" style="accent-color: var(--gcp-blue);">
+                            Private Instance
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" style="accent-color: var(--gcp-blue);">
+                            POC/Evaluation
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-input" placeholder="Tell us about your data challenges and Google Cloud requirements..."></textarea>
+                </div>
+                
+                <button type="submit" class="cta-button" style="width: 100%; padding: 1.2rem; font-size: 1.1rem; margin-top: 1rem;">
+                    <i class="fab fa-google"></i>
+                    Request GCP Integration Demo
                 </button>
             </form>
         </div>
@@ -807,33 +1168,37 @@
         <div class="footer-content">
             <div>
                 <div class="footer-logo">
-                    <i class="fas fa-brain" style="color: var(--primary); margin-right: 10px;"></i>
-                    Arlequin AI
+                    <i class="fas fa-cloud" style="color: var(--gcp-blue); margin-right: 10px;"></i>
+                    Arlequin AI on Google Cloud
                 </div>
                 <p class="footer-desc">
-                    Next-generation AI-native platform for data analysis: transform massive, raw, 
-                    unstructured and multilingual datasets into actions, instantly.
+                    A Google Cloud Native platform for multilingual social data intelligence.
+                    Built with Vertex AI, BigQuery, and Google's global infrastructure.
                 </p>
+                <div class="gcp-partner-badge">
+                    <i class="fab fa-google" style="color: var(--gcp-blue);"></i>
+                    Google Cloud Build Partner
+                </div>
             </div>
             
             <div class="footer-links">
-                <h4>Platform</h4>
-                <a href="#features">Features</a>
-                <a href="#platform">HuDex Platform</a>
-                <a href="#contact">Request Demo</a>
-                <a href="#contact">Pricing</a>
+                <h4>Google Cloud Services</h4>
+                <a href="#architecture">Vertex AI Integration</a>
+                <a href="#architecture">BigQuery Analytics</a>
+                <a href="#architecture">Cloud Storage</a>
+                <a href="#deployment">Deployment Options</a>
             </div>
             
             <div class="footer-links">
-                <h4>Company</h4>
-                <a href="#team">Our Team</a>
-                <a href="#contact">Careers</a>
-                <a href="#contact">Blog</a>
-                <a href="#contact">Press</a>
+                <h4>Resources</h4>
+                <a href="#integration">Integration Guide</a>
+                <a href="#deployment">Architecture Diagrams</a>
+                <a href="#contact">GCP Pricing Calculator</a>
+                <a href="#contact">Compliance Documentation</a>
             </div>
             
             <div class="footer-links">
-                <h4>Contact</h4>
+                <h4>Contact & Support</h4>
                 <a href="mailto:antoine@arlequinai.xyz">
                     <i class="fas fa-envelope" style="margin-right: 8px;"></i>
                     antoine@arlequinai.xyz
@@ -842,14 +1207,18 @@
                     <i class="fas fa-globe" style="margin-right: 8px;"></i>
                     arlequinai.xyz
                 </a>
+                <a href="https://cloud.google.com/marketplace" target="_blank">
+                    <i class="fab fa-google" style="margin-right: 8px;"></i>
+                    Google Cloud Marketplace
+                </a>
                 <div style="margin-top: 1.5rem;">
-                    <a href="#" style="display: inline-block; margin-right: 1rem; font-size: 1.2rem;">
-                        <i class="fab fa-linkedin"></i>
+                    <a href="#" style="display: inline-block; margin-right: 1rem; font-size: 1.2rem; color: var(--gcp-blue);">
+                        <i class="fab fa-google-drive"></i>
                     </a>
-                    <a href="#" style="display: inline-block; margin-right: 1rem; font-size: 1.2rem;">
-                        <i class="fab fa-twitter"></i>
+                    <a href="#" style="display: inline-block; margin-right: 1rem; font-size: 1.2rem; color: var(--gcp-blue);">
+                        <i class="fab fa-google-cloud"></i>
                     </a>
-                    <a href="#" style="display: inline-block; font-size: 1.2rem;">
+                    <a href="#" style="display: inline-block; font-size: 1.2rem; color: var(--text-secondary);">
                         <i class="fab fa-github"></i>
                     </a>
                 </div>
@@ -857,7 +1226,10 @@
         </div>
         
         <div class="copyright">
-            © 2023 Arlequin AI. All rights reserved. | GDPR Compliant | Sovereign European Solution
+            © 2023 Arlequin AI - Google Cloud Native Solution | 
+            <a href="#" style="color: var(--gcp-blue); text-decoration: none;">GDPR Compliant</a> | 
+            <a href="#" style="color: var(--gcp-blue); text-decoration: none;">ISO 27001 Certified</a> | 
+            <a href="#" style="color: var(--gcp-blue); text-decoration: none;">Google Cloud Partner</a>
         </div>
     </footer>
 
@@ -872,14 +1244,16 @@
                 name: this.querySelector('input[type="text"]').value,
                 email: this.querySelector('input[type="email"]').value,
                 company: this.querySelectorAll('input[type="text"]')[1].value,
+                gcpExperience: this.querySelector('select').value,
                 message: this.querySelector('textarea').value
             };
             
-            // 这里可以添加实际的表单提交逻辑
-            // 例如：发送到服务器或显示成功消息
+            // 显示GCP特定成功消息
+            const gcpMsg = formData.gcpExperience === 'new' 
+                ? "Welcome to Google Cloud! Our team will help you get started."
+                : "Our Google Cloud experts will contact you for a technical architecture review.";
             
-            // 显示成功消息
-            alert(`Thank you, ${formData.name}! Your message has been sent. We'll contact you at ${formData.email} shortly.`);
+            alert(`Thank you for your interest in Arlequin AI on Google Cloud!\n\n${gcpMsg}\n\nWe'll contact you at ${formData.email} within 24 hours.`);
             
             // 重置表单
             this.reset();
@@ -889,16 +1263,16 @@
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(10, 10, 15, 0.95)';
-                navbar.style.backdropFilter = 'blur(20px)';
+                navbar.style.background = 'rgba(15, 20, 25, 0.95)';
+                navbar.style.backdropFilter = 'blur(25px)';
             } else {
-                navbar.style.background = 'rgba(10, 10, 15, 0.85)';
-                navbar.style.backdropFilter = 'blur(15px)';
+                navbar.style.background = 'rgba(15, 20, 25, 0.9)';
+                navbar.style.backdropFilter = 'blur(20px)';
             }
         });
 
-        // 玻璃态卡片悬停效果增强
-        document.querySelectorAll('.glass-card').forEach(card => {
+        // 3D卡片悬停效果
+        document.querySelectorAll('.gcp-card').forEach(card => {
             card.addEventListener('mousemove', function(e) {
                 const rect = this.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -910,11 +1284,11 @@
                 const rotateY = (x - centerX) / 25;
                 const rotateX = (centerY - y) / 25;
                 
-                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
             });
             
             card.addEventListener('mouseleave', function() {
-                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
             });
         });
 
@@ -929,20 +1303,38 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    
+                    // 为GCP服务卡片添加顺序动画
+                    if (entry.target.classList.contains('service-card')) {
+                        const delay = Array.from(document.querySelectorAll('.service-card')).indexOf(entry.target) * 100;
+                        entry.target.style.transitionDelay = `${delay}ms`;
+                    }
                 }
             });
         }, observerOptions);
 
         // 观察需要动画的元素
-        document.querySelectorAll('.feature-card, .team-card, .stat-card').forEach(el => {
+        document.querySelectorAll('.service-card, .integration-card, .deployment-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
         });
 
-        console.log('Arlequin AI Website loaded successfully!');
-        console.log('Contact: antoine@arlequinai.xyz | Website: arlequinai.xyz');
+        // Google Cloud 控制台模拟
+        console.log(`
+╔══════════════════════════════════════════════════════════════╗
+║                 Arlequin AI - Google Cloud Console           ║
+║══════════════════════════════════════════════════════════════║
+║ Platform: HuDex AI Native Intelligence                       ║
+║ Status:  ✅ Connected to Google Cloud Project                ║
+║ Services: Vertex AI, BigQuery, Cloud Storage, Pub/Sub        ║
+║ Region:  europe-west1 (Belgium)                              ║
+║ Compliance: GDPR, ISO 27001, C5                              ║
+║ Contact: antoine@arlequinai.xyz                              ║
+║ Website: arlequinai.xyz                                      ║
+╚══════════════════════════════════════════════════════════════╝
+        `);
     </script>
 </body>
 </html>
